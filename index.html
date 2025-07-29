@@ -1,438 +1,443 @@
-# Trust-PDF
-TrustPDF est une application de vente de PDF professionnel 
 <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TrustPDF| Boutique</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Secret École Zakaria</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f5f5f5;
-    }
-    header {
-      background-color: #222;
-      color: #fff;
-      padding: 20px;
-      text-align: center;
-      position: relative;
-    }
-    header::after {
-      content: "";
-      display: block;
-      height: 4px;
-      background: linear-gradient(to right, #4caf50, #81c784);
-      margin-top: 10px;
-    }
-    nav {
-      display: flex;
-      justify-content: center;
-      background-color: #fff;
-      padding: 10px;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-    nav a {
-      text-decoration: none;
-      color: #333;
-      font-weight: bold;
-    }
-    .search {
-      text-align: center;
       margin: 20px;
+      background: #f9f9f9;
+      color: #222;
     }
-    .search input {
-      width: 80%;
-      padding: 10px;
-      font-size: 16px;
+    h1, h2, h3 {
+      text-align: center;
     }
-    .container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-      padding: 20px;
-    }
-    .card {
-      background-color: #fff;
-      padding: 15px;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .card img {
+    table {
       width: 100%;
-      height: 180px;
-      object-fit: cover;
-      border-radius: 10px;
+      max-width: 700px;
+      margin: 20px auto;
+      border-collapse: collapse;
+      background: white;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
-    .price {
-      font-size: 18px;
+    th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+      text-align: center;
+    }
+    input[type="number"], input[type="text"], input[type="password"], input[type="time"] {
+      padding: 5px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      text-align: center;
+    }
+    input[type="number"] {
+      width: 60px;
+    }
+    .notes-container input {
+      width: 50px;
+      margin: 2px;
+    }
+    #resultat, #totaux {
+      text-align: center;
+      max-width: 700px;
+      margin: 10px auto;
       font-weight: bold;
-      color: #4caf50;
-      margin: 10px 0 5px;
     }
-    .note {
-      font-size: 14px;
-      color: #888;
-      margin-bottom: 10px;
+    #resultat {
+      font-size: 1.3em;
+      color: #ff6600;
     }
-    .author {
-      font-size: 14px;
-      color: #555;
-      margin-bottom: 15px;
-    }
-    .card button {
-      background-color: #4caf50;
+    button {
+      display: block;
+      margin: 15px auto;
+      padding: 10px 25px;
+      background-color: #ff6600;
       color: white;
-      padding: 10px 20px;
       border: none;
-      border-radius: 5px;
-      font-size: 16px;
+      border-radius: 6px;
       cursor: pointer;
-      margin-top: auto;
+      font-size: 1em;
+    }
+    button:hover {
+      background-color: #e55b00;
+    }
+    #loginForm {
+      max-width: 400px;
+      margin: 80px auto;
+      background: white;
+      padding: 25px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      border-radius: 8px;
+    }
+    #appContainer {
+      display: none;
+    }
+    #planning div.seance {
+      margin: 6px 0;
+      padding: 6px 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      background-color: #f5f5f5;
+      text-align: left;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    #planning div.seance button.supprimerBtn {
+      float: right;
+      background-color: #e55b00;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      padding: 2px 8px;
+      font-size: 0.9em;
+    }
+    #planning div.seance button.supprimerBtn:hover {
+      background-color: #cc4c00;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Bienvenue sur TrustPDF</h1>
-  </header>
-  <nav>
-    <a href="#">Formations</a>
-    <a href="#">eBooks</a>
-  </nav>
-  <div class="search">
-    <input type="text" id="searchInput" placeholder="Rechercher un produit...">
+
+<!-- Connexion -->
+<div id="loginForm">
+  <h2>Connexion à Secret École Zakaria</h2>
+  <label>Nom d'utilisateur :</label><br>
+  <input type="text" id="username" placeholder="Nom d'utilisateur" value="Niampa"><br><br>
+  <label>Mot de passe :</label><br>
+  <input type="password" id="password" placeholder="Mot de passe" value="4917"><br><br>
+  <button onclick="connexion()">Se connecter</button>
+</div>
+
+<!-- Application -->
+<div id="appContainer">
+  <h1>Secret École Zakaria</h1>
+
+  <h2>📘 Mon Planning d'Étude</h2>
+  <label>Matière :</label>
+  <select id="matiere">
+    <option>Maths</option>
+    <option>Français</option>
+    <option>Histoire-Géographie</option>
+    <option>Physique-Chimie</option>
+    <option>SVT</option>
+    <option>Anglais</option>
+    <option>Allemand</option>
+  </select>
+  <label>Jour :</label>
+  <select id="jour">
+    <option>Lundi</option>
+    <option>Mardi</option>
+    <option>Mercredi</option>
+    <option>Jeudi</option>
+    <option>Vendredi</option>
+    <option>Samedi</option>
+    <option>Dimanche</option>
+  </select>
+  <label>Heure début :</label>
+  <input type="time" id="heureDebut" />
+  <label>Durée (minutes) :</label>
+  <input type="number" id="duree" min="1" max="480" placeholder="90" />
+  <button onclick="ajouterPlanning()">Ajouter à mon planning</button>
+  <div id="planning">
+    <h3>🗓️ Mes séances :</h3>
+    <div id="liste"></div>
   </div>
-  <div class="container" id="productContainer">
-    <div class="card">
-      <img src="https://i.postimg.cc/5tTmJBgK/Publication-Instagram-1er-mai-F-te-du-Travail-Moderne-Orange-et-Jaune-20250615-225820-0000.png="Produit 1">
-<p style="font-size: 18px; font-weight: bold; font-family: 'Georgia', serif; color: black; text-align: center;">
- Comment générer 100.000 FCFA par semaine avec ton téléphone 
-</p>
-      <div class="price">1500 FCFA</div>
-      <div class="note">⭐4.0</div>
-      <div class="author">trustPDF</div>
-      <a href="https://www.pay.moneyfusion.net/comment-generer-100-000-fcfa-par-semaine-avec-ton-telephone-en-2025_1750034626690/" target="_blank">
-  <button>Acheter maintenant</button>
-</a>
+  <div id="resume">⏳ Temps total d'étude cette semaine : 0 minutes</div>
+
+  <!-- Moyenne -->
+  <h2>📊 Calcul de la Moyenne Générale</h2>
+  <form id="formMoyenne" onsubmit="return false;">
+    <table>
+      <thead>
+        <tr>
+          <th>Matière</th>
+          <th>Coef</th>
+          <th>Nb Ex</th>
+          <th>Notes</th>
+          <th>Moyenne</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+    <div id="totaux">
+      <p>Somme des Coefs : <span id="sommeCoef">0</span></p>
+      <p>Somme des Totaux : <span id="sommeTotaux">0</span></p>
     </div>
-    <div class="card">
-      <img src="https://i.postimg.cc/5tTmJBgK/Publication-Instagram-1er-mai-F-te-du-Travail-Moderne-Orange-et-Jaune-20250615-225820-0000.png="Produit 2">
-<p style="font-size: 18px; font-weight: bold; font-family: 'Georgia', serif; color: black; text-align: center;">
-  Résumé ultra simple gagner de l'argent en ligne 2025
-</p>
-      <div class="price">1000 FCFA</div>
-      <div class="note">⭐4.7</div>
-      <div class="author">trustPDF</div>
-      <a href="https://www.pay.moneyfusion.net/resume-ultra-simple-gagner-de-largent-en-ligne-2025_1750034951105/"target="_blank">
-<button>Acheter maintenant</button>
-</a>
-    </div>
-    <div class="card">
-      <img src="https://i.postimg.cc/5tTmJBgK/Publication-Instagram-1er-mai-F-te-du-Travail-Moderne-Orange-et-Jaune-20250615-225820-0000.png="Produit 3">
-<p style="font-size: 18px; font-weight: bold; font-family: 'Georgia', serif; color: black; text-align: center;">
-  Créer et vendre des ebooks en automatique avec ton téléphone 
-</p>
-      <div class="price">1500 FCFA</div>
-      <div class="note">⭐4.1</div>
-      <div class="author">trustPDF</div>
-      <a href="https://www.pay.moneyfusion.net/creer-et-vendre-des-ebooks-en-automatique-avec-ton-telephone_1750035102057/"target="_blank">
-<button>Acheter maintenant</button>
-</a>
-    </div>
-<div class="card">
-      <img src="https://i.postimg.cc/5tTmJBgK/Publication-Instagram-1er-mai-F-te-du-Travail-Moderne-Orange-et-Jaune-20250615-225820-0000.png="Produit 2">
-<p style="font-size: 18px; font-weight: bold; font-family: 'Georgia', serif; color: black; text-align: center;">
-  10 meilleures façons de gagner de l'argent avec son téléphone 
-</p>
-      <div class="price">1000 FCFA</div>
-      <div class="note">⭐4.8</div>
-      <div class="author">trustPDF</div>
-      <a href="https://www.pay.moneyfusion.net/les-10-meilleures-facons-de-gagner-de-largent-avec-son-telephone_1750035203591/"target="_blank">
-<button>Acheter maintenant</button>
-</a>
- </div>
-<div class="card">
-      <img src="https://i.postimg.cc/5tTmJBgK/Publication-Instagram-1er-mai-F-te-du-Travail-Moderne-Orange-et-Jaune-20250615-225820-0000.png="Produit 2">
-<p style="font-size: 18px; font-weight: bold; font-family: 'Georgia', serif; color: black; text-align: center;">
-  Transformer tes idées en PDF à vendre 
-</p>
-      <div class="price">1500 FCFA</div>
-      <div class="note">⭐4.9</div>
-      <div class="author">trustPDF</div>
-      <a href="https://www.pay.moneyfusion.net/transformer-tes-idees-en-pdf-a-vendre_1750064242624/"target="_blank">
-<button>Acheter maintenant</button>
+    <button onclick="calculerMoyenne()">Calculer la moyenne</button>
+  </form>
+  <div id="resultat"></div>
 </div>
-<div class="card">
-      <img src="https://i.postimg.cc/5tTmJBgK/Publication-Instagram-1er-mai-F-te-du-Travail-Moderne-Orange-et-Jaune-20250615-225820-0000.png="Produit 2">
-<p style="font-size: 18px; font-weight: bold; font-family: 'Georgia', serif; color: black; text-align: center;">
-  Réjoignez le réseau 3h18 et accédez à des missions 
-</p>
-      <div class="price">2000 FCFA</div>
-      <div class="note">⭐4.0</div>
-      <div class="author">trustPDF</div>
-      <a href="https://www.pay.moneyfusion.net/rejoignez-le-reseau-3h18-et-accedez-a-des-missions_1750064315079/"target="_blank">
-<button>Acheter maintenant</button>
-</a>
-</div>
-<div class="card">
-      <img src="https://i.postimg.cc/5tTmJBgK/Publication-Instagram-1er-mai-F-te-du-Travail-Moderne-Orange-et-Jaune-20250615-225820-0000.png="Produit 2">
-<p style="font-size: 18px; font-weight: bold; font-family: 'Georgia', serif; color: black; text-align: center;">
-  Publicités ultra rentable sur tiktok, Facebook en 2025
-</p>
-      <div class="price">2000 FCFA</div>
-      <div class="note">⭐4.8</div>
-      <div class="author">trustPDF</div>
-      <a href="https://www.pay.moneyfusion.net/publicites-ultra-rentables-sur-tiktok-facebook-en-2025_1750064381700/"target="_blank">
-<button>Acheter maintenant</button>
-</a>
-</div>
-<div class="card">
-      <img src="https://i.postimg.cc/5tTmJBgK/Publication-Instagram-1er-mai-F-te-du-Travail-Moderne-Orange-et-Jaune-20250615-225820-0000.png="Produit 2">
-<p style="font-size: 18px; font-weight: bold; font-family: 'Georgia', serif; color: black; text-align: center;">
-  Pack e-commerce boutique en ligne 2025
-</p>
-      <div class="price">5000 FCFA</div>
-      <div class="note">⭐4.8</div>
-      <div class="author">trustPDF</div>
-      <a href="https://www.pay.moneyfusion.net/pack-ecommerce-2025-boutique_1750064465034/"target="_blank">
-<button>Acheter maintenant</button>
-</a>
-</div>
-<div class="card">
-      <img src="https://i.postimg.cc/5tTmJBgK/Publication-Instagram-1er-mai-F-te-du-Travail-Moderne-Orange-et-Jaune-20250615-225820-0000.png="Produit 2">
-<p style="font-size: 18px; font-weight: bold; font-family: 'Georgia', serif; color: black; text-align: center;">
- Meilleures idées de vidéos tiktok pour percer en 2025
-</p>
-      <div class="price">1500 FCFA</div>
-      <div class="note">⭐4.0</div>
-      <div class="author">trustPDF</div>
-      <a href="https://www.pay.moneyfusion.net/les-meilleures-idees-de-videos-tiktok-pour-percer-en-2025_1750065066356/"target="_blank">
-<button>Acheter maintenant</button>
-</a>
-</div>
-<div class="card">
-      <img src="https://i.postimg.cc/5tTmJBgK/Publication-Instagram-1er-mai-F-te-du-Travail-Moderne-Orange-et-Jaune-20250615-225820-0000.png="Produit 2">
-<p style="font-size: 18px; font-weight: bold; font-family: 'Georgia', serif; color: black; text-align: center;">
-  Le plan marketing en une seule page 
-</p>
-      <div class="price">1000 FCFA</div>
-      <div class="note">⭐3.8</div>
-      <div class="author">trustPDF</div>
-      <a href="https://www.pay.moneyfusion.net/le-plan-marketing-en-une-seule-page-_1750064983812/"target="_blank">
-<button>Acheter maintenant</button>
-</a>
-</div>
-<div class="card">
-      <img src="https://i.postimg.cc/5tTmJBgK/Publication-Instagram-1er-mai-F-te-du-Travail-Moderne-Orange-et-Jaune-20250615-225820-0000.png="Produit 2">
-<p style="font-size: 18px; font-weight: bold; font-family: 'Georgia', serif; color: black; text-align: center;">
-  Lancer une formation en ligne avec ton téléphone en 2025
-</p>
-      <div class="price">1500 FCFA</div>
-      <div class="note">⭐4.5</div>
-      <div class="author">trustPDF</div>
-      <a href="https://www.pay.moneyfusion.net/lancer-une-formation-en-ligne-avec-ton-telephone-en-2025_1750065998671/"target="_blank">
-<button>Acheter maintenant</button>
-</a>
-</div>
-<div class="card">
-      <img src="https://i.postimg.cc/5tTmJBgK/Publication-Instagram-1er-mai-F-te-du-Travail-Moderne-Orange-et-Jaune-20250615-225820-0000.png="Produit 2">
-<p style="font-size: 18px; font-weight: bold; font-family: 'Georgia', serif; color: black; text-align: center;">
- Formation complet le guide ultime de l'intelligence artificielle en 2025
-</p>
-      <div class="price">4000 FCFA</div>
-      <div class="note">⭐4.9</div>
-      <div class="author">trustPDF</div>
-      <a href="https://www.pay.moneyfusion.net/formation-complete-le-guide-ultime-de-lintelligence-artificielle-en-2025_1750066066166/"target="_blank">
-<button>Acheter maintenant</button>
-</a>
-</div>
-<div class="card">
-      <img src="https://i.postimg.cc/5tTmJBgK/Publication-Instagram-1er-mai-F-te-du-Travail-Moderne-Orange-et-Jaune-20250615-225820-0000.png="Produit 2">
-<p style="font-size: 18px; font-weight: bold; font-family: 'Georgia', serif; color: black; text-align: center;">
-  Créer et vendre des formations 2025
-</p>
-      <div class="price">1000 FCFA</div>
-      <div class="note">⭐4.5</div>
-      <div class="author">trustPDF</div>
-      <a href="https://www.pay.moneyfusion.net/creer-et-vendre-des-formations-2025_1750066142817/"target="_blank">
-<button>Acheter maintenant</button>
-</a>
-</div>
-<div class="card">
-      <img src="https://i.postimg.cc/5tTmJBgK/Publication-Instagram-1er-mai-F-te-du-Travail-Moderne-Orange-et-Jaune-20250615-225820-0000.png="Produit 2">
-<p style="font-size: 18px; font-weight: bold; font-family: 'Georgia', serif; color: black; text-align: center;">
-  Créer un business avec les fiches tiktok 
-</p>
-      <div class="price">1000 FCFA</div>
-      <div class="note">⭐4.0</div>
-      <div class="author">trustPDF</div>
-      <a href="https://www.pay.moneyfusion.net/creer-un-business-avec-les-fiches-tiktok_1750066271921/"target="_blank">
-<button>Acheter maintenant</button>
-</a>
-</div>
-<div class="card">
-      <img src="https://i.postimg.cc/5tTmJBgK/Publication-Instagram-1er-mai-F-te-du-Travail-Moderne-Orange-et-Jaune-20250615-225820-0000.png="Produit 2">
-<p style="font-size: 18px; font-weight: bold; font-family: 'Georgia', serif; color: black; text-align: center;">
-  Créer et vendre des ebooks en automatique avec ton téléphone 
-</p>
-      <div class="price">2000 FCFA</div>
-      <div class="note">⭐4.7</div>
-      <div class="author">trustPDF</div>
-      <a href="https://www.pay.moneyfusion.net/creer-et-vendre-des-ebooks-en-automatique-avec-ton-telephone_1750067669471/"target="_blank">
-<button>Acheter maintenant</button>
-</a>
-</div>
-<div class="card">
-      <img src="https://i.postimg.cc/5tTmJBgK/Publication-Instagram-1er-mai-F-te-du-Travail-Moderne-Orange-et-Jaune-20250615-225820-0000.png="Produit 2">
-<p style="font-size: 18px; font-weight: bold; font-family: 'Georgia', serif; color: black; text-align: center;">
-  Comment vivre d'un compte tiktok en Afrique 
-</p>
-      <div class="price">2500 FCFA</div>
-      <div class="note">⭐4.6</div>
-      <div class="author">trustPDF</div>
-      <a href="https://www.pay.moneyfusion.net/comment-vivre-dun-compte-tiktok-en-afrique_1750067894502/"target="_blank">
-<button>Acheter maintenant</button>
-</a>
-</div>
-<div class="card">
-      <img src="https://i.postimg.cc/5tTmJBgK/Publication-Instagram-1er-mai-F-te-du-Travail-Moderne-Orange-et-Jaune-20250615-225820-0000.png="Produit 2">
-<p style="font-size: 18px; font-weight: bold; font-family: 'Georgia', serif; color: black; text-align: center;">
-  Comment gagner 10.000 FCFA en 7 jours
-</p>
-      <div class="price">1500 FCFA</div>
-      <div class="note">⭐4.5</div>
-      <div class="author">trustPDF</div>
-      <a href="https://www.pay.moneyfusion.net/comment-gagner-10-000-fcfa-en-7-jours_1750067986152/"target="_blank">
-<button>Acheter maintenant</button>
-</a>
-</div>
-<div class="card">
-      <img src="https://i.postimg.cc/5tTmJBgK/Publication-Instagram-1er-mai-F-te-du-Travail-Moderne-Orange-et-Jaune-20250615-225820-0000.png="Produit 2">
-<p style="font-size: 18px; font-weight: bold; font-family: 'Georgia', serif; color: black; text-align: center;">
-  Comment fonctionne l'algorithme tiktok pour maximiser tes vues en 2025
-</p>
-      <div class="price">5000 FCFA</div>
-      <div class="note">⭐4.8</div>
-      <div class="author">trustPDF</div>
-      <a href="https://www.pay.moneyfusion.net/comment-fonctionne-lalgorithme-tiktok-pour-maximiser-tes-vues-en-2025_1750068084264/"target="_blank">
-<button>Acheter maintenant</button>
-</a>
-</div>
-<div class="card">
-      <img src="https://i.postimg.cc/5tTmJBgK/Publication-Instagram-1er-mai-F-te-du-Travail-Moderne-Orange-et-Jaune-20250615-225820-0000.png="Produit 2">
-<p style="font-size: 18px; font-weight: bold; font-family: 'Georgia', serif; color: black; text-align: center;">
-  Activer la monétisation tiktok en Afrique 2025
-</p>
-      <div class="price">2000 FCFA</div>
-      <div class="note">⭐4.5</div>
-      <div class="author">trustPDF</div>
-      <a href="https://www.pay.moneyfusion.net/activer-la-monetisation-tiktok-en-afrique-2025_1750068243913/"target="_blank">
-<button>Acheter maintenant</button>
-</a>
-</div>
-<div class="card">
-      <img src="https://i.postimg.cc/5tTmJBgK/Publication-Instagram-1er-mai-F-te-du-Travail-Moderne-Orange-et-Jaune-20250615-225820-0000.png="Produit 2">
-<p style="font-size: 18px; font-weight: bold; font-family: 'Georgia', serif; color: black; text-align: center;">
-  7 idées de vidéos tiktok qui vont te rendre populaire 
-</p>
-      <div class="price">2000 FCFA</div>
-      <div class="note">⭐4.9</div>
-      <div class="author">trustPDF</div>
-      <a href="https://www.pay.moneyfusion.net/7-idees-de-videos-tiktok-qui-vont-te-rendre-populaire_1750076744958/"target="_blank">
-<button>Acheter maintenant</button>
-</a>
-</div>
-<div class="card">
-      <img src="https://i.postimg.cc/5tTmJBgK/Publication-Instagram-1er-mai-F-te-du-Travail-Moderne-Orange-et-Jaune-20250615-225820-0000.png="Produit 2">
-<p style="font-size: 18px; font-weight: bold; font-family: 'Georgia', serif; color: black; text-align: center;">
-  10 erreurs graves que font les tiktokeurs débutants en 2025
-</p>
-      <div class="price">2000 FCFA</div>
-      <div class="note">⭐4.5</div>
-      <div class="author">trustPDF</div>
-      <a href="https://www.pay.moneyfusion.net/10-erreurs-graves-que-font-les-tiktokeurs-debutants-en-2025_1750076494756/"target="_blank">
-<button>Acheter maintenant</button>
-</a>
-</div>
-<div class="card">
-      <img src="https://i.postimg.cc/5tTmJBgK/Publication-Instagram-1er-mai-F-te-du-Travail-Moderne-Orange-et-Jaune-20250615-225820-0000.png="Produit 2">
-<p style="font-size: 18px; font-weight: bold; font-family: 'Georgia', serif; color: black; text-align: center;">
-  10 conseils puissants pour bien gérer tes réseaux sociaux en 2025
-</p>
-     <div class="price">2000 FCFA</div>
-      <div class="note">⭐4.6</div>
-      <div class="author">trustPDF</div>
-      <a href="https://www.pay.moneyfusion.net/10-conseils-puissants-pour-bien-gerer-tes-reseaux-en-2025_1750076562964/"target="_blank">
-<button>Acheter maintenant</button>
-</a>
-</div>
-<div class="card">
-      <img src="https://i.postimg.cc/5tTmJBgK/Publication-Instagram-1er-mai-F-te-du-Travail-Moderne-Orange-et-Jaune-20250615-225820-0000.png="Produit 2">
-<p style="font-size: 18px; font-weight: bold; font-family: 'Georgia', serif; color: black; text-align: center;">
-  10 bonnes pratiques pour utiliser les réseaux sociaux en 2025
-</p>
-      <div class="price">2000 FCFA</div>
-      <div class="note">⭐4.6</div>
-      <div class="author">trustPDF</div>
-      <a href="https://www.pay.moneyfusion.net/10-bonnes-pratiques-pour-utiliser-les-reseaux-sociaux-en-2025_1750076626495/"target="_blank">
-<button>Acheter maintenant</button>
-</a>
-</div>
-<div class="card">
-      <img src="https://i.postimg.cc/5tTmJBgK/Publication-Instagram-1er-mai-F-te-du-Travail-Moderne-Orange-et-Jaune-20250615-225820-0000.png="Produit 2">
-<p style="font-size: 18px; font-weight: bold; font-family: 'Georgia', serif; color: black; text-align: center;">
-  Pack comment créer une application
-</p>
-      <div class="price">5000 FCFA</div>
-      <div class="note">⭐4.8</div>
-      <div class="author">trustPDF</div>
-      <a href="https://www.pay.moneyfusion.net/pack-comment-creer-une-application-mobile_1750077509334/"target="_blank">
-<button>Acheter maintenant</button>
-</a>
-</div>
-<div class="card">
-      <img src="https://i.postimg.cc/5tTmJBgK/Publication-Instagram-1er-mai-F-te-du-Travail-Moderne-Orange-et-Jaune-20250615-225820-0000.png="Produit 2">
-<p style="font-size: 18px; font-weight: bold; font-family: 'Georgia', serif; color: black; text-align: center;">
-  Formation devenir influenceur rentable sans des millions d'abonnés
-</p>
-      <div class="price">2500 FCFA</div>
-      <div class="note">⭐4.5</div>
-      <div class="author">trustPDF</div>
-      <a href="https://www.pay.moneyfusion.net/formation---devenir-influenceur-rentable-sans-des-millions-dabonnes-_1750077617174/"target="_blank">
-<button>Acheter maintenant</button>
-</a>
-</div>
-<div class="card">
-      <img src="https://i.postimg.cc/5tTmJBgK/Publication-Instagram-1er-mai-F-te-du-Travail-Moderne-Orange-et-Jaune-20250615-225820-0000.png="Produit 2">
-<p style="font-size: 18px; font-weight: bold; font-family: 'Georgia', serif; color: black; text-align: center;">
-  Comment avoir beaucoup de vues sur tiktok en 2025
-</p>
-      <div class="price">2500 FCFA</div>
-      <div class="note">⭐4.7</div>
-      <div class="author">trustPDF</div>
-      <a href="https://www.pay.moneyfusion.net/comment-avoir-beaucoup-de-vues-sur-tiktok-en-2025_1750081733423/"target="_blank">
-<button>Acheter maintenant</button>
-</a>
-</div>
-<div class="card">
-      <img src="https://i.postimg.cc/5tTmJBgK/Publication-Instagram-1er-mai-F-te-du-Travail-Moderne-Orange-et-Jaune-20250615-225820-0000.png="Produit 2">
-<p style="font-size: 18px; font-weight: bold; font-family: 'Georgia', serif; color: black; text-align: center;">
-  10 meilleures conseils aux femmes pour prendre soin d'elle-même 
-</p>
-    <div class="price">2000 FCFA</div>
-      <div class="note">⭐4.7</div>
-      <div class="author">trustPDF</div>
-      <a href="https://www.pay.moneyfusion.net/les-10-meilleurs-conseils-aux-femmes-pour-prendre-soin-delles-memes_1750081846296/"target="_blank">
-<button>Acheter maintenant</button>
-</a>
-</div>
-<div class="card">
-      <img src="https://i.postimg.cc/5tTmJBgK/Publication-Instagram-1er-mai-F-te-du-Travail-Moderne-Orange-et-Jaune-20250615-225820-0000.png="Produit 2">
-<p style="font-size: 18px; font-weight: bold; font-family: 'Georgia', serif; col
+
+<!-- Sons -->
+<audio id="sonDebut" src="https://www.soundjay.com/buttons/sounds/button-16.mp3" preload="auto"></audio>
+<audio id="sonFin" src="https://www.soundjay.com/button/beep-07.mp3" preload="auto"></audio>
+
+<script>
+  // --- Variables globales ---
+  const STORAGE_PLANNING_KEY = "secretEcoleZakaria_planning";
+  const STORAGE_NOTES_KEY = "secretEcoleZakaria_notes";
+
+  // --- Connexion ---
+  function connexion() {
+    const user = document.getElementById("username").value.trim();
+    const pass = document.getElementById("password").value.trim();
+    if (user === "Niampa" && pass === "4917") {
+      document.getElementById("loginForm").style.display = "none";
+      document.getElementById("appContainer").style.display = "block";
+      chargerPlanning();
+      chargerNotes();
+    } else {
+      alert("Nom d'utilisateur ou mot de passe incorrect.");
+    }
+  }
+
+  // --- Planning ---
+  let planning = [];
+
+  function timeToMinutes(t) {
+    const [h, m] = t.split(":").map(Number);
+    return h * 60 + m;
+  }
+  function minutesToTime(mins) {
+    const h = Math.floor(mins / 60);
+    const m = mins % 60;
+    return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`;
+  }
+
+  // Affiche le planning dans #liste avec bouton supprimer
+  function afficherPlanning() {
+    const liste = document.getElementById('liste');
+    liste.innerHTML = "";
+    planning.forEach((seance, index) => {
+      const div = document.createElement("div");
+      div.className = "seance";
+      div.textContent = `📘 ${seance.matiere} - 🗓️ ${seance.jour} de ${seance.heureDebut} à ${seance.heureFin} (${seance.duree} min)`;
+
+      // Bouton supprimer à côté
+      const btnSuppr = document.createElement("button");
+      btnSuppr.textContent = "Supprimer";
+      btnSuppr.className = "supprimerBtn";
+      btnSuppr.onclick = () => {
+        // Supprime la séance sans réduire le temps total
+        planning.splice(index, 1);
+        sauvegarderPlanning();
+        afficherPlanning();
+        // Ne pas appeler miseAJourResume() pour garder le total intact
+      };
+      div.appendChild(btnSuppr);
+
+      liste.appendChild(div);
+    });
+  }
+
+  // Met à jour le total des minutes (somme des durées au moment de l'ajout)
+  // Pour respecter la demande, on n'appelle plus cette fonction lors d'une suppression
+  let totalMinutes = 0;
+  function miseAJourResume() {
+    // Recalcule total uniquement quand on ajoute (pas quand on supprime)
+    totalMinutes = planning.reduce((s, e) => s + e.duree, 0);
+    document.getElementById("resume").textContent = `⏳ Temps total d'étude cette semaine : ${totalMinutes} minutes`;
+  }
+
+  // Sauvegarde planning dans localStorage
+  function sauvegarderPlanning() {
+    localStorage.setItem(STORAGE_PLANNING_KEY, JSON.stringify(planning));
+  }
+
+  // Charge planning depuis localStorage
+  function chargerPlanning() {
+    const data = localStorage.getItem(STORAGE_PLANNING_KEY);
+    if (data) {
+      try {
+        planning = JSON.parse(data);
+      } catch {
+        planning = [];
+      }
+    } else {
+      planning = [];
+    }
+    afficherPlanning();
+    // Ne pas remettre à jour le total ici pour garder le total intact après suppression
+    if (totalMinutes === 0) {
+      // Au premier chargement, on calcule totalMinutes normalement
+      totalMinutes = planning.reduce((s, e) => s + e.duree, 0);
+    }
+    document.getElementById("resume").textContent = `⏳ Temps total d'étude cette semaine : ${totalMinutes} minutes`;
+  }
+
+  // Ajouter une séance au planning
+  function ajouterPlanning() {
+    const matiere = document.getElementById('matiere').value;
+    const jour = document.getElementById('jour').value;
+    const heureDebut = document.getElementById('heureDebut').value;
+    const duree = parseInt(document.getElementById('duree').value);
+    if (!heureDebut || isNaN(duree) || duree <= 0) {
+      alert("Entrez une heure et une durée valides.");
+      return;
+    }
+    const debutMin = timeToMinutes(heureDebut);
+    const finMin = debutMin + duree;
+    if (finMin > 1440) {
+      alert("Durée trop longue !");
+      return;
+    }
+    const heureFin = minutesToTime(finMin);
+    // Ajout au planning
+    planning.push({ matiere, jour, heureDebut, heureFin, duree });
+    sauvegarderPlanning();
+    afficherPlanning();
+    // Ajout au totalMinutes mais on garde le total affiché tel quel (par ta demande)
+    totalMinutes += duree;
+    document.getElementById("resume").textContent = `⏳ Temps total d'étude cette semaine : ${totalMinutes} minutes`;
+    document.getElementById('sonDebut').play();
+  }
+
+  // --- Notifications de début/fin séances ---
+  setInterval(() => {
+    const now = new Date();
+    const jours = ["Dimanche","Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi"];
+    const j = jours[now.getDay()];
+    const h = now.getHours().toString().padStart(2,'0') + ":" + now.getMinutes().toString().padStart(2,'0');
+    planning.forEach(seance => {
+      if (seance.jour === j) {
+        if (seance.heureDebut === h) {
+          document.getElementById("sonDebut").play();
+          alert("🔔 Début de " + seance.matiere);
+        }
+        if (seance.heureFin === h) {
+          document.getElementById("sonFin").play();
+          alert("✅ Fin de " + seance.matiere);
+        }
+      }
+    });
+  }, 60000);
+
+  // --- Moyennes et Notes ---
+  const matieres = ["Maths", "Français", "Histoire-Géographie", "Physique-Chimie", "SVT", "Anglais", "Allemand"];
+  const tableBody = document.getElementById("tableBody");
+
+  // Créer tableau au chargement (avant connexion)
+  matieres.forEach((m, i) => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${m}</td>
+      <td><input type="number" min="1" value="1" id="coef-${i}"></td>
+      <td><input type="number" min="0" value="0" id="nbEx-${i}" onchange="genererInputsNotes(${i})"></td>
+      <td><div class="notes-container" id="notes-${i}"></div></td>
+      <td><span id="moyenne-${i}">0</span></td>
+      <td><span id="total-${i}">0</span></td>
+    `;
+    tableBody.appendChild(tr);
+  });
+
+  // Génère les inputs notes selon le nb d'exos
+  function genererInputsNotes(index) {
+    const nb = parseInt(document.getElementById(`nbEx-${index}`).value);
+    const container = document.getElementById(`notes-${index}`);
+    container.innerHTML = "";
+    for (let i = 0; i < nb; i++) {
+      const input = document.createElement("input");
+      input.type = "number";
+      input.min = 0;
+      input.max = 20;
+      input.placeholder = `Note ${i+1}`;
+      input.oninput = () => {
+        calculerMoyennePartielle(index);
+        sauvegarderNotes();
+      };
+      input.id = `note-${index}-${i}`;
+      container.appendChild(input);
+    }
+  }
+
+  // Calcule moyenne partielle par matière
+  function calculerMoyennePartielle(index) {
+    const nb = parseInt(document.getElementById(`nbEx-${index}`).value);
+    let total = 0, valid = 0;
+    for (let i = 0; i < nb; i++) {
+      const val = parseFloat(document.getElementById(`note-${index}-${i}`)?.value);
+      if (!isNaN(val)) {
+        total += val;
+        valid++;
+      }
+    }
+    const moy = valid ? total / valid : 0;
+    const coef = parseFloat(document.getElementById(`coef-${index}`).value);
+    const totalCoef = moy * coef;
+    document.getElementById(`moyenne-${index}`).textContent = moy.toFixed(2);
+    document.getElementById(`total-${index}`).textContent = totalCoef.toFixed(2);
+  }
+
+  // Calcule la moyenne générale
+  function calculerMoyenne() {
+    let sc = 0, st = 0;
+    matieres.forEach((_, i) => {
+      const coef = parseFloat(document.getElementById(`coef-${i}`).value);
+      const total = parseFloat(document.getElementById(`total-${i}`).textContent);
+      if (!isNaN(coef) && coef > 0) {
+        sc += coef;
+        st += total;
+      }
+    });
+    const moyGen = sc ? (st / sc).toFixed(2) : 0;
+    document.getElementById("sommeCoef").textContent = sc.toFixed(2);
+    document.getElementById("sommeTotaux").textContent = st.toFixed(2);
+    document.getElementById("resultat").textContent = `Moyenne Générale Pondérée : ${moyGen} / 20`;
+    sauvegarderNotes();
+  }
+
+  // --- Sauvegarde des notes/coefs dans localStorage ---
+  function sauvegarderNotes() {
+    const data = matieres.map((_, i) => {
+      const coef = parseFloat(document.getElementById(`coef-${i}`).value) || 1;
+      const nbEx = parseInt(document.getElementById(`nbEx-${i}`).value) || 0;
+      const notes = [];
+      for(let j=0; j<nbEx; j++) {
+        const val = parseFloat(document.getElementById(`note-${i}-${j}`)?.value);
+        notes.push(isNaN(val) ? null : val);
+      }
+      return { coef, nbEx, notes };
+    });
+    localStorage.setItem(STORAGE_NOTES_KEY, JSON.stringify(data));
+  }
+
+  function chargerNotes() {
+    const dataRaw = localStorage.getItem(STORAGE_NOTES_KEY);
+    if (!dataRaw) return;
+    try {
+      const data = JSON.parse(dataRaw);
+      data.forEach((item, i) => {
+        if(i >= matieres.length) return;
+        document.getElementById(`coef-${i}`).value = item.coef ?? 1;
+        document.getElementById(`nbEx-${i}`).value = item.nbEx ?? 0;
+        genererInputsNotes(i);
+        if(item.notes && Array.isArray(item.notes)) {
+          item.notes.forEach((n, j) => {
+            const input = document.getElementById(`note-${i}-${j}`);
+            if(input && n !== null) input.value = n;
+          });
+        }
+        calculerMoyennePartielle(i);
+      });
+      calculerMoyenne();
+    } catch {}
+  }
+
+  // Sauvegarder automatiquement quand on change coef ou nbEx
+  matieres.forEach((_, i) => {
+    document.addEventListener("input", (e) => {
+      if(e.target.id === `coef-${i}` || e.target.id === `nbEx-${i}`) {
+        if(e.target.id === `nbEx-${i}`) genererInputsNotes(i);
+        calculerMoyenne();
+      }
+    });
+  });
+</script>
+</body>
+</html>
